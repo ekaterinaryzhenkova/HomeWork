@@ -13,41 +13,41 @@ namespace WebService1.Entity4.Repositories
         {
             db = context;
         }
-        public IEnumerable<DbCustomer> GetAll()
+        public async Task<IEnumerable<DbCustomer>> GetAll()
         {
-            return db.Customers.Include(x => x.Numbers).ToList();
+            return await db.Customers.Include(x => x.Numbers).ToListAsync();
         }
 
-        public DbCustomer Get(int id)
+        public async Task<DbCustomer> Get(int id)
         {
-            return db.Customers.Include(x => x.Numbers).FirstOrDefault(x => x.Id == id);
+            return await db.Customers.Include(x => x.Numbers).FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public void Put(DbCustomer customer)
+        public async Task Put(DbCustomer customer)
         {
-            var upcustomer = db.Customers.FirstOrDefault(x => x.Id == customer.Id);
+            var upcustomer = await db.Customers.FirstOrDefaultAsync(x => x.Id == customer.Id);
             if(upcustomer is not null)
             {
                 upcustomer.Name = customer.Name;
                 upcustomer.Age = customer.Age;
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 
-        public void Post(DbCustomer customer)
+        public async Task Post(DbCustomer customer)
         {
-            db.Add(customer);
-            db.SaveChanges();
+            await db.AddAsync(customer);
+            await db.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var customer = db.Customers.FirstOrDefault(x => x.Id == id);
+            var customer = await db.Customers.FirstOrDefaultAsync(x => x.Id == id);
 
             if (customer is not null)
             {
                 db.Customers.Remove(customer);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
     }

@@ -18,6 +18,8 @@ using WebService1.Entity4.Mappers;
 using WebService1.Entity4.Validators;
 using WebService1.Entity3.Validators;
 using WebService1.Entity4.Consumers;
+using FluentValidation;
+using WebService1.Entity3.Models;
 
 namespace WebServices
 {
@@ -33,7 +35,7 @@ namespace WebServices
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             services.AddMassTransit();
 
             services.AddMassTransit(cfg =>
@@ -59,9 +61,9 @@ namespace WebServices
             services.AddMemoryCache();
             services.AddControllers();
 
-            services.AddSingleton<IBookValidator, BookValidator>();
-            services.AddSingleton<ICustomerValidator, CustomerValidator>();
-            services.AddSingleton<IPhoneNumberValidator, PhoneNumberValidator>();
+            services.AddSingleton<IValidator<Book>, BookValidator>();
+            services.AddSingleton<IValidator<DbCustomer>, CustomerValidator>();
+            services.AddSingleton<IValidator<DbPhoneNumber>, PhoneNumberValidator>();
 
 
             services.AddTransient<IBookMapper, BookMapper>();

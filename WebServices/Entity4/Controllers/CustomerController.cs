@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using WebService1.Entity4.Commands;
 using WebService1.Entity4.DbModels;
 using WebService1.Entity4.DTO;
@@ -17,35 +18,35 @@ namespace WebService1.Entity4.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<CustomerDTO> GetAll()
+        public async Task<IEnumerable<CustomerDTO>> GetAll()
         {
-            IEnumerable<CustomerDTO> customers = _command.GetAll();
+            IEnumerable<CustomerDTO> customers = await _command.GetAll();
             return customers;
 
         }
 
         [HttpGet("{id}")]
-        public CustomerDTO Get(int id)
+        public async Task<CustomerDTO> Get(int id)
         {
-            return _command.Get(id);
+            return await _command.Get(id);
         }
 
         [HttpPost]
-        public void Post([FromBody] DbCustomer customer)
+        public async Task Post([FromBody] DbCustomer customer)
         {
-             _command.Post(customer);
+            await _command.Post(customer);
         }
 
         [HttpPut]
-        public void Put([FromBody] DbCustomer customer)
+        public async Task Put([FromBody] DbCustomer customer)
         {
-            _command.Put(customer);
+            await _command.Put(customer);
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _command.Delete(id);
+            await _command.Delete(id);
         }
     }
 }

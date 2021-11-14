@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebService1.Entity3.Validators
+namespace WebService2.Requests
 {
-    public interface IBookValidator
+    public class UpdateCustomerRequest
     {
     }
 }

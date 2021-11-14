@@ -14,38 +14,36 @@ namespace WebService1.Entity1_2.Controllers
         {
             repos = stationary;
         }
-      
-       
+
         [HttpGet]
         public IEnumerable<Stationary> GetAll()
         {
             return repos.GetAll();
         }
 
-        [HttpGet("{id}")] 
+        [HttpGet("{id}")]
         public Stationary Get(int id)
         {
             return repos.Get(id);
         }
-        
-        [HttpPost] 
+
+        [HttpPost]
         public Stationary Post([FromBody] Stationary product)
         {
             return repos.Post(product);
-          
         }
 
         [HttpPut]
         public Stationary Put([FromBody] Stationary product)
         {
             repos.Update(product);
-            return product; 
+            return product;
         }
 
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            repos.Delete(id);      
+            repos.Delete(id);
         }
     }
 }

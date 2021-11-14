@@ -8,7 +8,7 @@ using WebService2.Response;
 
 namespace WebService1.Entity4.Consumers
 {
-    public class CustomerConsumer : IConsumer<CustomerRequest>
+    public class CustomerConsumer  : IConsumer<CustomerRequest>
     {
         public async Task Consume(ConsumeContext<CustomerRequest> context)
         {

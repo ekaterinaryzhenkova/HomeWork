@@ -13,16 +13,19 @@ namespace WebService1.Entity1_2.Validators
 
             RuleFor(x => x.Id)
                 .GreaterThan(0)
-                .LessThan(int.MaxValue);
+                .LessThan(int.MaxValue)
+                .WithMessage("Incorrect data");
 
             RuleFor(x => x.Name)
                 .NotNull()
                 .NotEmpty()
-                .MaximumLength(50);
+                .MaximumLength(50)
+                .WithMessage("Incorrect name");
 
             RuleFor(x => x.Price)
                 .GreaterThan(0)
-                .LessThan(100000);
+                .LessThan(100000)
+                .WithMessage("Incorrect data");
         }
     }
 }

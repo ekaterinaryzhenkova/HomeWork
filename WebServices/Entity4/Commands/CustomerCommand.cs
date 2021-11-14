@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using FluentValidation;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using WebService1.Entity4.DbModels;
 using WebService1.Entity4.DTO;
 using WebService1.Entity4.Mappers;
@@ -8,19 +10,20 @@ namespace WebService1.Entity4.Commands
 {
     public class CustomerCommand : ICustomerCommand
     {
-        //validator
+        private readonly IValidator<DbCustomer> _validator;
         private readonly ICustomerRepository _repos;
         private readonly ICustomerMapper _map;
 
-        public CustomerCommand(ICustomerRepository repos, ICustomerMapper map)
+        public CustomerCommand(ICustomerRepository repos, ICustomerMapper map, IValidator<DbCustomer> validator)
         {
             _repos = repos;
             _map = map;
+            _validator = validator;
         }
 
-        public CustomerDTO Get(int id)
+        public async Task<CustomerDTO> Get(int id)
         {
-            DbCustomer dbcustomer = _repos.Get(id);
+            DbCustomer dbcustomer = await _repos.Get(id);
             if (dbcustomer is not null)
             {
                 CustomerDTO customerdto = _map.Convertobj(dbcustomer);
@@ -29,9 +32,9 @@ namespace WebService1.Entity4.Commands
             return null;
         }
 
-        public IEnumerable<CustomerDTO> GetAll()
+        public async Task<IEnumerable<CustomerDTO>> GetAll()
         {
-            IEnumerable<DbCustomer> dbcustomers = _repos.GetAll();
+            IEnumerable<DbCustomer> dbcustomers = await _repos.GetAll();
             if(dbcustomers is not null)
             {
                 IEnumerable<CustomerDTO> customersDTO = _map.ConvertAll(dbcustomers);
@@ -40,19 +43,32 @@ namespace WebService1.Entity4.Commands
             return null;
         }
 
-        public void Post(DbCustomer customer)
+        public async Task Post(DbCustomer customer)
         {
-            _repos.Post(customer);
+            var result = _validator.Validate(customer);
+            if (!result.IsValid)
+            {
+                return;
+            }
+            await _repos.Post(customer);
         }
 
-        public void Put(DbCustomer customer)
+        public async Task Put(DbCustomer customer)
         {
-            _repos.Put(customer);
+            var result = _validator.Validate(customer);
+            if (!result.IsValid)
+            {
+                return;
+            }
+           await _repos.Put(customer);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _repos.Delete(id);
+            if (id > 0)
+            {
+              await _repos.Delete(id);
+            }
         }
     }
 }

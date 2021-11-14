@@ -9,6 +9,6 @@ namespace Models.Response
 {
     public class GetAllCustomerResponse
     {
-        public List<Customer> Customers { get; set; }
+        //public List<CustomerResponse> Customers { get; set; }
     }
 }

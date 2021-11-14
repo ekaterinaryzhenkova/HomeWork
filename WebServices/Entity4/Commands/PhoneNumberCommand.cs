@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using FluentValidation;
+using System.Collections.Generic;
 using WebService1.Entity4.DbModels;
 using WebService1.Entity4.DTO;
 using WebService1.Entity4.Mappers;
@@ -8,18 +9,19 @@ namespace WebService1.Entity4.Commands
 {
     public class PhoneNumberCommand : IPhoneNumberCommand
     {
+        private readonly IValidator<DbPhoneNumber> _validator;
         private readonly IPhoneNumberRepository _repos;
         private readonly IPhoneNumbersMapper _map;
 
-        public PhoneNumberCommand(IPhoneNumberRepository repos, IPhoneNumbersMapper map)
+        public PhoneNumberCommand(IPhoneNumberRepository repos, IPhoneNumbersMapper map, IValidator<DbPhoneNumber> validator)
         {
             _repos = repos;
             _map = map;
+            _validator = validator;
         }
 
         public PhoneNumberDTO Get(int id)
         {
-            //validator
             DbPhoneNumber dbnumber = _repos.Get(id);
             if (dbnumber is not null)
             {
@@ -42,17 +44,28 @@ namespace WebService1.Entity4.Commands
 
         public void Post(DbPhoneNumber number)
         {
+            if (!_validator.Validate(number).IsValid)
+            {
+                return;
+            }
             _repos.Post(number);
         }
 
         public void Put(DbPhoneNumber number)
         {
+            if (!_validator.Validate(number).IsValid)
+            {
+                return;
+            }
             _repos.Put(number);
         }
 
         public void Delete(int id)
         {
-            _repos.Delete(id);
+            if (id > 0)
+            {
+                _repos.Delete(id);
+            }
         }
     }
 }

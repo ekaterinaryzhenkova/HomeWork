@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using WebService1.Entity1_2.Models;
@@ -93,39 +94,67 @@ namespace WebService1.Entity1_2.Repositories
 
         public void CreateFileStationary()
         {
-            using (StreamWriter tw = new StreamWriter(@"C:\File\Stationary.txt"))
+            try
             {
-                foreach (var item in _products)
+                using (StreamWriter tw = new StreamWriter(@"C:\File\Stationary.txt"))
                 {
-                    tw.WriteLine(string.Format("Id: {0}, Name: {1}, Price:{2}", item.Id, item.Name, item.Price.ToString()));
+                    foreach (var item in _products)
+                    {
+                        tw.WriteLine(string.Format("Id: {0}, Name: {1}, Price:{2}", item.Id, item.Name, item.Price.ToString()));
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
             }
         }
         public void AddtoFileStationary(Stationary item)
         {
-            using (StreamWriter tw = new StreamWriter(@"C:\File\Stationary.txt", true))
+            try
             {
-                tw.WriteLine(string.Format("Id: {0}, Name: {1}, Price:{2}", item.Id, item.Name, item.Price.ToString()));
+                using (StreamWriter tw = new StreamWriter(@"C:\File\Stationary.txt", true))
+                {
+                    tw.WriteLine(string.Format("Id: {0}, Name: {1}, Price:{2}", item.Id, item.Name, item.Price.ToString()));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
             }
         }
         public void UpdateFileStationary(List<Stationary> stationaryobj)
         {
-            using (StreamWriter tw = new StreamWriter(@"C:\File\Stationary.txt", false))
+            try
             {
-                foreach (var item in stationaryobj)
+                using (StreamWriter tw = new StreamWriter(@"C:\File\Stationary.txt", false))
                 {
-                    tw.WriteLine(string.Format("Id: {0}, Name: {1}, Price:{2}", item.Id, item.Name, item.Price.ToString()));
+                    foreach (var item in stationaryobj)
+                    {
+                        tw.WriteLine(string.Format("Id: {0}, Name: {1}, Price:{2}", item.Id, item.Name, item.Price.ToString()));
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
             }
         }
         public void DeleteFileStationary(List<Stationary> _products)
         {
-            using (StreamWriter tw = new StreamWriter(@"C:\File\Stationary.txt", false))
+            try
             {
-                foreach (var item in _products)
+                using (StreamWriter tw = new StreamWriter(@"C:\File\Stationary.txt", false))
                 {
-                    tw.WriteLine(string.Format("Id: {0}, Name: {1}, Price:{2}", item.Id, item.Name, item.Price.ToString()));
+                    foreach (var item in _products)
+                    {
+                        tw.WriteLine(string.Format("Id: {0}, Name: {1}, Price:{2}", item.Id, item.Name, item.Price.ToString()));
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
             }
         }
 

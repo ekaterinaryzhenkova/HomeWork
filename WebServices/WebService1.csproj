@@ -29,4 +29,8 @@
     <ProjectReference Include="..\WebService2\WebService2.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entity4\Repositories\CustomerResponse\" />
+  </ItemGroup>
+
 </Project>

@@ -7,7 +7,7 @@ using WebService1.Entity3.Models;
 
 namespace WebService1.Entity3.Validators
 {
-    public class BookValidator : AbstractValidator<Book>, IBookValidator
+    public class BookValidator : AbstractValidator<Book>
     {
         public BookValidator()
         {
@@ -21,11 +21,12 @@ namespace WebService1.Entity3.Validators
                 .NotNull()
                 .NotEmpty()
                 .Must(name => name.ToUpper() != "Name")
-                .WithMessage("Incorrect data");
+                .WithMessage("Incorrect name");
 
-            RuleFor(x => x.Id) //??
+            RuleFor(x => x.Id)
                 .NotEmpty()
-                .Must(x => x >= 14 && x <= 110)
+                .GreaterThan(0)
+                .LessThan(10000)
                 .WithMessage("Incorrect data");
         }
     }
